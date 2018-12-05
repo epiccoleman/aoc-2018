@@ -27,4 +27,10 @@ namespace utils {
     std::cerr << text << result << std::endl;
     std::cerr << "==================================================" << std::endl;
   }
+
+  void present_result(string text, string result){
+    std::cerr << "==================================================" << std::endl;
+    std::cerr << text << result << std::endl;
+    std::cerr << "==================================================" << std::endl;
+  }
 }

@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.1)
+project(InventoryManagement)
+
+add_library(InventoryManagement InventoryManagement.cpp)
+target_compile_features(InventoryManagement PUBLIC cxx_std_17)
+
+add_executable(InventoryManagementTest InventoryManagementTest.cpp)
+target_link_libraries(InventoryManagementTest InventoryManagement gtest pthread)
