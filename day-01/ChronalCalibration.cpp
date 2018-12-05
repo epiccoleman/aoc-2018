@@ -3,11 +3,11 @@
 #include <numeric>
 #include <set>
 
-int ChronalCalibration::chronal_calibration_part_1(const std::vector<int> frequencies){
+int ChronalCalibration::sum_frequencies(const std::vector<int> frequencies){
   return std::accumulate(frequencies.begin(), frequencies.end(), 0);
 }
 
-int ChronalCalibration::chronal_calibration_part_2(const std::vector<int> frequencies){
+int ChronalCalibration::find_first_repeated_frequency(const std::vector<int> frequencies){
   int frequency = 0;
   std::set<int> seen_values;
   bool found = false;

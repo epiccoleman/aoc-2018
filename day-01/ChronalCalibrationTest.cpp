@@ -11,9 +11,9 @@ TEST(ChronalCalibrationTest, calibration1){
   std::vector<int> test2 { 1, 1, -2 };
   std::vector<int> test3 { -1, -2, -3 };
 
-  EXPECT_EQ(ChronalCalibration::chronal_calibration_part_1(test1), 3);
-  EXPECT_EQ(ChronalCalibration::chronal_calibration_part_1(test2), 0);
-  EXPECT_EQ(ChronalCalibration::chronal_calibration_part_1(test3), -6);
+  EXPECT_EQ(ChronalCalibration::sum_frequencies(test1), 3);
+  EXPECT_EQ(ChronalCalibration::sum_frequencies(test2), 0);
+  EXPECT_EQ(ChronalCalibration::sum_frequencies(test3), -6);
 }
 
 TEST(ChronalCalibrationTest, calibration2){
@@ -21,15 +21,15 @@ TEST(ChronalCalibrationTest, calibration2){
   std::vector<int> test2 { 3, 3, 4, -2, -4 };
   std::vector<int> test3 { -6, 3, 8, 5, -6 };
 
-  EXPECT_EQ(ChronalCalibration::chronal_calibration_part_2(test1), 0);
-  EXPECT_EQ(ChronalCalibration::chronal_calibration_part_2(test2), 10);
-  EXPECT_EQ(ChronalCalibration::chronal_calibration_part_2(test3), 5);
+  EXPECT_EQ(ChronalCalibration::find_first_repeated_frequency(test1), 0);
+  EXPECT_EQ(ChronalCalibration::find_first_repeated_frequency(test2), 10);
+  EXPECT_EQ(ChronalCalibration::find_first_repeated_frequency(test3), 5);
 }
 
 TEST(ChronalCalibrationTest, solvePart1){
   std::vector<int> frequencies = utils::slurp_file_as_ints("input.txt");
 
-  int result = ChronalCalibration::chronal_calibration_part_1(frequencies);
+  int result = ChronalCalibration::sum_frequencies(frequencies);
 
   utils::present_result("Part 1: ", result);
 
@@ -39,7 +39,7 @@ TEST(ChronalCalibrationTest, solvePart1){
 TEST(ChronalCalibrationTest, solvePart2){
   std::vector<int> frequencies = utils::slurp_file_as_ints("input.txt");
 
-  int result = ChronalCalibration::chronal_calibration_part_2(frequencies);
+  int result = ChronalCalibration::find_first_repeated_frequency(frequencies);
 
   utils::present_result("Part 2: ", result);
 
