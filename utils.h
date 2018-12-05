@@ -21,4 +21,10 @@ namespace utils {
 
     return numbers;
   }
+
+  void present_result(string text, int result){
+    std::cerr << "==================================================" << std::endl;
+    std::cerr << text << result << std::endl;
+    std::cerr << "==================================================" << std::endl;
+  }
 }

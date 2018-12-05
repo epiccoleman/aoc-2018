@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.1)
+project(ChronalCalibration)
+
+add_library(ChronalCalibration ChronalCalibration.cpp)
+target_compile_features(ChronalCalibration PUBLIC cxx_std_17)
+
+add_executable(ChronalCalibrationTest ChronalCalibrationTest.cpp)
+target_link_libraries(ChronalCalibrationTest ChronalCalibration gtest pthread)
