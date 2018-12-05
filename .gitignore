@@ -1,4 +1,7 @@
 a.out
+*.o
+*.a
+AdventOfCodeTest
 
 CMakeLists.txt.user
 CMakeCache.txt

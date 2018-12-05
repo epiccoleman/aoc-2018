@@ -2,7 +2,7 @@
 #include <vector>
 #include <iostream>
 
-#include "../utils.h"
+#include "../utils/utils.h"
 
 #include "InventoryManagement.h"
 
@@ -53,7 +53,7 @@ TEST(InventoryManagementTest, find_similar_boxes_difference){
 }
 
 TEST(InventoryManagementTest, solvePart1){
-  std::vector<std::string> ids = utils::slurp_file_as_strings("input.txt");
+  std::vector<std::string> ids = utils::slurp_file_as_strings("day-02/input.txt");
 
   int result = InventoryManagement::inventory_checksum(ids);
 
@@ -63,17 +63,11 @@ TEST(InventoryManagementTest, solvePart1){
 }
 
 TEST(InventoryManagementTest, solvePart2){
-  std::vector<std::string> ids = utils::slurp_file_as_strings("input.txt");
+  std::vector<std::string> ids = utils::slurp_file_as_strings("day-02/input.txt");
 
   std::string result = InventoryManagement::find_similar_boxes_difference(ids);
 
   utils::present_result("Part 2: ", result);
 
   EXPECT_EQ(result, "mphcuasvrnjzzkbgdtqeoylva");
-}
-
-int main(int argc, char* argv[])
-{
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
 }

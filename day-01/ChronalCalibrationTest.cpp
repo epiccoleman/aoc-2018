@@ -2,7 +2,7 @@
 #include <vector>
 #include <iostream>
 
-#include "../utils.h"
+#include "../utils/utils.h"
 
 #include "ChronalCalibration.h"
 
@@ -27,7 +27,7 @@ TEST(ChronalCalibrationTest, calibration2){
 }
 
 TEST(ChronalCalibrationTest, solvePart1){
-  std::vector<int> frequencies = utils::slurp_file_as_ints("input.txt");
+  std::vector<int> frequencies = utils::slurp_file_as_ints("day-01/input.txt");
 
   int result = ChronalCalibration::sum_frequencies(frequencies);
 
@@ -37,17 +37,11 @@ TEST(ChronalCalibrationTest, solvePart1){
 }
 
 TEST(ChronalCalibrationTest, solvePart2){
-  std::vector<int> frequencies = utils::slurp_file_as_ints("input.txt");
+  std::vector<int> frequencies = utils::slurp_file_as_ints("day-01/input.txt");
 
   int result = ChronalCalibration::find_first_repeated_frequency(frequencies);
 
   utils::present_result("Part 2: ", result);
 
   EXPECT_EQ(result, 72330);
-}
-
-int main(int argc, char* argv[])
-{
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
 }
