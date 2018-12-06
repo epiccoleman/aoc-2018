@@ -10,10 +10,13 @@ cat << EOF > "${PROJECT_DIR}/test"
 #!/bin/bash
 
 TEST_NAME="${NAME}Test"
-
-./AdventOfCodeTest --gtest_filter=\"${TEST_NAME}.*\"
 EOF
-chmod +x "${PROJECT_DIR"/test"
+
+cat << 'EOF' >> "${PROJECT_DIR}/test"
+./AdventOfCodeTest --gtest_filter="${TEST_NAME}.*"
+EOF
+
+chmod +x "${PROJECT_DIR}/test"
 
 cat << EOF > "${PROJECT_DIR}/${NAME}Test.cpp"
 #include <gtest/gtest.h>
@@ -40,4 +43,3 @@ namespace ${NAME} {
 
 #endif
 EOF
-
