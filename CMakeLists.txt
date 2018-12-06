@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 project(AdventOfCode2018)
 
-ENABLE_TESTING()
-
 file(GLOB_RECURSE srcs
     "*.cpp"
     "utils/*.cpp"
