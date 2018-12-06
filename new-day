@@ -22,7 +22,7 @@ cat << EOF > "${PROJECT_DIR}/${NAME}Test.cpp"
 #include "${NAME}.h"
 
 TEST(${NAME}Test, helloTest){
-    EXPECT_EQ(2, 2)
+    EXPECT_EQ(2, 2);
 }
 EOF
 
