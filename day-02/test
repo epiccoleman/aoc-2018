@@ -1,0 +1,5 @@
+#!/bin/bash
+
+TEST_NAME="InventoryManagementTest"
+
+./AdventOfCodeTest --gtest_filter="${TEST_NAME}.*"

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+TEST_NAME="ChronalCalibrationTest"
+
+docker run -v ${PWD}:/code --rm cpp:latest "bash -c ./AdventOfCodeTest --gtest_filter=\"${TEST_NAME}.*\""

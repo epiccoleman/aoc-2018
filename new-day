@@ -1,0 +1,44 @@
+#!/bin/bash -eu
+
+DAY="${1}"
+NAME="${2}"
+PROJECT_DIR=day-"${DAY}"
+
+mkdir ${PROJECT_DIR}
+
+cat << EOF > "${PROJECT_DIR}/test"
+#!/bin/bash
+
+TEST_NAME="${NAME}Test"
+
+./AdventOfCodeTest --gtest_filter=\"${TEST_NAME}.*\"
+EOF
+chmod +x "${PROJECT_DIR"/test"
+
+cat << EOF > "${PROJECT_DIR}/${NAME}Test.cpp"
+
+#include <gtest/gtest.h>
+#include "../utils/utils.h"
+
+#include "${NAME}.h"
+
+TEST(${NAME}Test, helloTest){
+    EXPECT_EQ(2, 2)
+}
+EOF
+
+cat << EOF > "${PROJECT_DIR}/${NAME}.cpp"
+#include "${NAME}.h"
+EOF
+
+cat << EOF > "${PROJECT_DIR}/${NAME}.h"
+#ifndef DAY_${1}
+#define DAY_${1}
+
+namespace ${NAME} {
+
+}
+
+#endif
+EOF
+
