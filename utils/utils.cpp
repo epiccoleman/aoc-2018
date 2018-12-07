@@ -5,7 +5,19 @@
 #include <iterator>
 #include <algorithm>
 
-std::vector<std::string> utils::slurp_file_as_strings(std::string file_name){
+std::vector<std::string> utils::slurp_file_lines(std::string file_name){
+  std::ifstream input_file(file_name);
+  std::vector<std::string> lines;
+  std::string line;
+  
+  while (std::getline(input_file, line)) {
+    lines.push_back(line);
+  }
+
+  return lines;
+}
+
+std::vector<std::string> utils::slurp_file_tokens(std::string file_name){
   std::ifstream input_file(file_name);
   std::istream_iterator<std::string> start(input_file), end;
 
@@ -13,7 +25,7 @@ std::vector<std::string> utils::slurp_file_as_strings(std::string file_name){
 }
 
 std::vector<int> utils::slurp_file_as_ints(std::string file_name){
-  std::vector<std::string> input = slurp_file_as_strings(file_name);
+  std::vector<std::string> input = slurp_file_lines(file_name);
   std::vector<int> numbers(input.size());
 
   std::transform(input.begin(), input.end(), numbers.begin(), [](std::string n) -> int { return stoi(n); });

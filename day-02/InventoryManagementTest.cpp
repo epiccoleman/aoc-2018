@@ -53,7 +53,7 @@ TEST(InventoryManagementTest, find_similar_boxes_difference){
 }
 
 TEST(InventoryManagementTest, solvePart1){
-  std::vector<std::string> ids = utils::slurp_file_as_strings("day-02/input.txt");
+  std::vector<std::string> ids = utils::slurp_file_lines("day-02/input.txt");
 
   int result = InventoryManagement::inventory_checksum(ids);
 
@@ -63,7 +63,7 @@ TEST(InventoryManagementTest, solvePart1){
 }
 
 TEST(InventoryManagementTest, solvePart2){
-  std::vector<std::string> ids = utils::slurp_file_as_strings("day-02/input.txt");
+  std::vector<std::string> ids = utils::slurp_file_lines("day-02/input.txt");
 
   std::string result = InventoryManagement::find_similar_boxes_difference(ids);
 
