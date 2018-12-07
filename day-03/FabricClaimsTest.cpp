@@ -36,7 +36,7 @@ TEST(FabricClaimsTest, countContestedPoints){
 TEST(FabricClaimsTest, solvePart1){
   std::vector<std::string> claim_strings = utils::slurp_file_lines("day-03/input.txt");
 
-  std::vector<FabricClaims::FabricClaim> claims; //(claim_strings.size());
+  std::vector<FabricClaims::FabricClaim> claims;
 
   for (auto claim_string : claim_strings) {
     claims.push_back(FabricClaims::parse_claim(claim_string));
@@ -47,4 +47,20 @@ TEST(FabricClaimsTest, solvePart1){
   utils::present_result("Part 1: ", result);
 
   EXPECT_EQ(result, 112418);
+}
+
+TEST(FabricClaimsTest, solvePart2){
+  std::vector<std::string> claim_strings = utils::slurp_file_lines("day-03/input.txt");
+
+  std::vector<FabricClaims::FabricClaim> claims;
+
+  for (auto claim_string : claim_strings) {
+    claims.push_back(FabricClaims::parse_claim(claim_string));
+  }
+
+  int result = FabricClaims::find_uncontested_claim(claims);
+
+  utils::present_result("Part 2: ", result);
+
+  EXPECT_EQ(result, 560);
 }

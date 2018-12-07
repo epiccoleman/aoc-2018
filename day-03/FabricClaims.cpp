@@ -37,10 +37,9 @@ FabricClaims::FabricClaim FabricClaims::parse_claim(std::string input){
   return FabricClaim(id, x, y, w, h);
 }
 
-int FabricClaims::count_contested_points(std::vector<FabricClaim> claims){
+std::set<std::pair<int,int> > FabricClaims::contested_points(std::vector<FabricClaim> claims) {
   std::set<std::pair<int, int> > claimed_points;
   std::set<std::pair<int, int> > contested_points;
-  int contested_point_count = 0;
 
   for (FabricClaim claim : claims){
     for(std::pair<int, int> point : claim.points){
@@ -50,5 +49,27 @@ int FabricClaims::count_contested_points(std::vector<FabricClaim> claims){
     }
   }
 
-  return contested_points.size();
+  return contested_points;
+}
+
+int FabricClaims::count_contested_points(std::vector<FabricClaim> claims){
+  auto contested = contested_points(claims);
+  return contested.size();
+}
+
+
+int FabricClaims::find_uncontested_claim(std::vector<FabricClaim> claims) {
+  auto contested = contested_points(claims);
+
+  for (FabricClaim claim : claims){
+    std::vector<std::pair<int, int> > output_holder;
+    std::set_intersection(contested.begin(), contested.end(), claim.points.begin(), claim.points.end(), std::back_inserter(output_holder));
+
+    if(!output_holder.size()){
+      return claim.id;
+    }
+
+  }
+
+  return -1;
 }
