@@ -2,9 +2,15 @@ FROM ubuntu:18.04
 
 RUN apt-get update -qq && apt-get upgrade -y
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
-RUN apt-get install -y build-essential cmake libgtest-dev gdb
+RUN apt-get install --fix-missing -y build-essential libgtest-dev gdb wget
 
 RUN echo "set nu" > ~/.vimrc && echo "inoremap jk <esc>" >> ~/.vimrc
+
+RUN cd /tmp && \
+wget https://github.com/Kitware/CMake/releases/download/v3.13.1/cmake-3.13.1.tar.gz && \
+tar -xzvf cmake-3.13.1.tar.gz && \
+cd cmake-3.13.1 && \
+./bootstrap && make && make install
 
 # ----------- Build gtest ------------
 RUN cd /usr/src/gtest && \
