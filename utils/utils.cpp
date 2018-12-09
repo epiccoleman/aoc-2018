@@ -25,7 +25,7 @@ std::vector<std::string> utils::slurp_file_tokens(std::string file_name){
 }
 
 std::vector<int> utils::slurp_file_as_ints(std::string file_name){
-  std::vector<std::string> input = slurp_file_lines(file_name);
+  std::vector<std::string> input = slurp_file_tokens(file_name);
   std::vector<int> numbers(input.size());
 
   std::transform(input.begin(), input.end(), numbers.begin(), [](std::string n) -> int { return stoi(n); });
