@@ -2,7 +2,11 @@ FROM ubuntu:18.04
 
 RUN apt-get update -qq && apt-get upgrade -y
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
-RUN apt-get install --fix-missing -y build-essential libgtest-dev gdb wget
+RUN apt-get install --fix-missing -y build-essential libgtest-dev gdb wget software-properties-common
+
+RUN add-apt-repository ppa:ubuntu-toolchain-r/test && \
+    apt-get update && \
+    apt-get install -y gcc-8 g++-8
 
 RUN echo "set nu" > ~/.vimrc && echo "inoremap jk <esc>" >> ~/.vimrc
 
