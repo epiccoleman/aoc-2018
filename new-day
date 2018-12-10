@@ -4,7 +4,7 @@ DAY="${1}"
 NAME="${2}"
 PROJECT_DIR=day-"${DAY}"
 
-mkdir ${PROJECT_DIR}
+mkdir -p ${PROJECT_DIR}
 
 cat << EOF > "${PROJECT_DIR}/test"
 #!/bin/bash
