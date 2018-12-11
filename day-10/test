@@ -1,0 +1,4 @@
+#!/bin/bash
+
+TEST_NAME="StarAlignmentTest"
+./AdventOfCodeTest --gtest_filter="${TEST_NAME}.*"

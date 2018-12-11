@@ -13,6 +13,7 @@ list(FILTER srcs EXCLUDE REGEX Test)
 
 file(GLOB_RECURSE test_srcs
     "*Test.cpp"
+    "utils/*Test.cpp"
 )
 
 add_library(AdventOfCode ${srcs})
