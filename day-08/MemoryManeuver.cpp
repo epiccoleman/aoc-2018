@@ -35,5 +35,17 @@ int MemoryManeuver::sum_metadata(const memory_node root) {
 }
 
 int MemoryManeuver::node_value(const memory_node root) {
-  return std::accumulate(root.metadata.begin(), root.metadata.end(), 0);
+
+  if (root.children.empty()) {
+    return std::accumulate(root.metadata.begin(), root.metadata.end(), 0);
+  }
+  else {
+    int sum = 0;
+    for (int index : root.metadata) {
+      if (index <= root.children.size()){
+        sum += node_value(root.children[index - 1]);
+      }
+    }
+    return sum;
+  }
 }

@@ -62,6 +62,14 @@ TEST(MemoryManeuverTest, whenNodeHasNoChildrennode_valueReturnsSumOfMetadata){
   EXPECT_EQ(MemoryManeuver::node_value(test_node), 108);
 }
 
+TEST(MemoryManeuverTest, whenNodeHasChildrennode_valueReturnsSumOfNodeValuesReferencedByMetadata){
+  std::list<int> test_list { 2, 3, 0, 3, 10, 11, 12, 1, 1, 0, 1, 99, 2, 1, 1, 2 };
+
+  MemoryManeuver::memory_node test_node = MemoryManeuver::parse_input_from_list(test_list);
+
+  EXPECT_EQ(MemoryManeuver::node_value(test_node), 66);
+}
+
 TEST(MemoryManeuverTest, solvePart1){
   std::vector<int> input_v = utils::slurp_file_as_ints("day-08/input.txt");
   std::list<int> input;
@@ -75,4 +83,19 @@ TEST(MemoryManeuverTest, solvePart1){
   utils::present_result("Part 1: ", result);
 
   EXPECT_EQ(result, 42951);
+}
+
+TEST(MemoryManeuverTest, solvePart2){
+  std::vector<int> input_v = utils::slurp_file_as_ints("day-08/input.txt");
+  std::list<int> input;
+
+  std::copy(input_v.begin(), input_v.end(), std::back_inserter(input));
+
+  MemoryManeuver::memory_node test_node = MemoryManeuver::parse_input_from_list(input);
+
+  int result = MemoryManeuver::node_value(test_node);
+
+  utils::present_result("Part 2: ", result);
+
+  EXPECT_EQ(result, 18568);
 }
