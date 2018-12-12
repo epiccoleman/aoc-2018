@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sort original-input.txt > input.txt

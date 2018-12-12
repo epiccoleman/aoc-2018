@@ -1,0 +1,6 @@
+#!/bin/bash
+
+TEST_NAME="ReposeRecordTest"
+
+./AdventOfCodeTest --gtest_filter="${TEST_NAME}.*"
+
