@@ -37,7 +37,7 @@ int ReposeRecord::sleepiest_guard() {
   return guard_it->first;
 }
 
-int ReposeRecord::sleepiest_minute(int guard_id) {
+std::pair<int, int> ReposeRecord::sleepiest_minute(int guard_id) {
   std::vector<int> sleep_record = guardSleeps.find(guard_id)->second;
 
   std::map<int, int> minute_records;
@@ -52,34 +52,21 @@ int ReposeRecord::sleepiest_minute(int guard_id) {
                                       return minute_a.second < minute_b.second;
                                     });
 
-  return minute_it->first;
+  return *minute_it;
 }
 
 std::pair<int, int> ReposeRecord::guard_with_favoritest_minute(){
   std::map<int, std::pair<int, int> > all_minute_records;
 
   for (auto guard : guardSleeps){
-    std::vector<int> sleep_record = guard.second;
-
-    std::map<int, int> minute_records;
-
-    for(auto i : sleep_record){
-      minute_records[i]++;  // holy shit, something concise!
-    }
-
-    auto minute_it = std::max_element(minute_records.begin(), minute_records.end(),
-                                      [this](std::pair<int, int> minute_a,
-                                             std::pair<int, int> minute_b){
-                                        return minute_a.second < minute_b.second;
-                                      });
-
-    all_minute_records[guard.first] = *minute_it;
+    int guard_id = guard.first;
+    all_minute_records[guard_id] = sleepiest_minute(guard_id);
   }
 
   auto guard_it = std::max_element(all_minute_records.begin(), all_minute_records.end(),
                                     [this](std::pair<int, std::pair<int, int> > guard_record_a,
                                            std::pair<int, std::pair<int, int> > guard_record_b){
-                                      return guard_record_a.second.second < guard_record_b.second.second; 
+                                      return guard_record_a.second.second < guard_record_b.second.second;
                                     });
 
   return { guard_it->first, guard_it->second.first};

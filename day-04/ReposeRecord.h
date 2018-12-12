@@ -10,7 +10,7 @@ public:
   void process_log_lines(std::vector<std::string> logs);
   void process_line(std::string log);
   int sleepiest_guard();
-  int sleepiest_minute(int guard_id);
+  std::pair<int, int> sleepiest_minute(int guard_id);
   std::pair<int, int> guard_with_favoritest_minute();
 
 

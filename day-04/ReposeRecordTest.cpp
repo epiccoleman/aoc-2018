@@ -79,7 +79,7 @@ TEST(ReposeRecordTest, sleepiestMinute){
   test.process_log_lines(logs);
   int sleepy_guy = test.sleepiest_guard();
 
-  EXPECT_EQ(test.sleepiest_minute(sleepy_guy), 24);
+  EXPECT_EQ(test.sleepiest_minute(sleepy_guy).first, 24);
 }
 
 TEST(ReposeRecordTest, solvePart1){
@@ -89,7 +89,7 @@ TEST(ReposeRecordTest, solvePart1){
   test.process_log_lines(logs);
 
   int sleepy = test.sleepiest_guard();
-  int minute = test.sleepiest_minute(sleepy);
+  int minute = test.sleepiest_minute(sleepy).first;
 
   int result = sleepy * minute;
   utils::present_result("Part 1: ", result);
