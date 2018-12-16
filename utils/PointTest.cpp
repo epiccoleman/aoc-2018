@@ -24,3 +24,10 @@ TEST(PointTest, canUsePlusEqualsOperator){
   EXPECT_EQ(testA.x, 84);
   EXPECT_EQ(testA.y, 0);
 }
+
+TEST(PointTest, equalityOperator){
+  utils::Point testA { 42, 42 };
+  utils::Point testB { 42, 42 };
+
+  EXPECT_EQ(testA, testB);
+}

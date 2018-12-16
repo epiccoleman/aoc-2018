@@ -5,6 +5,7 @@
 
 #include <string>
 #include <vector>
+#include <utility>
 
 namespace MinecartMadness {
 
@@ -15,8 +16,19 @@ namespace MinecartMadness {
 
   class Cart {
   public:
-    Cart(int loc_x, int loc_y, int dir_x, int dir_y) : location { loc_x, loc_y }, direction { dir_x, dir_y } {}
-    Cart(int loc_x, int loc_y, utils::Point initial_dir) : location { loc_x, loc_y }, direction (initial_dir) {}
+    Cart(int loc_x, int loc_y, utils::Point initial_dir, const std::vector<std::string>& b) : location { loc_x, loc_y }, direction (initial_dir), board(b), next_crossroad_dir(0) {}
+
+    void advance();
+
+    void handle_forward_slash();
+    void handle_back_slash();
+    void handle_crossroads();
+    void turn_left();
+    void turn_right();
+
+    int next_crossroad_dir;
+    const std::vector<std::string>& board;
+    const std::vector<utils::Point> crashes;
     utils::Point location;
     utils::Point direction;
   };
@@ -27,6 +39,8 @@ namespace MinecartMadness {
     MinecartSimulation(std::vector<std::string> gameboard);
     void simulate();
     void find_carts();
+    std::pair<int, int> find_first_crash();
+
     // find crash
     // check for crash
 

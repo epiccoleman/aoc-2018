@@ -15,6 +15,10 @@ namespace utils {
       this->y += a.y;
       return *this;
     }
+
+    bool operator ==(const Point &rhs) const {
+      return this->x == rhs.x && this->y == rhs.y;
+    }
   };
 }
 
