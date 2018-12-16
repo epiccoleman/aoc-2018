@@ -16,36 +16,46 @@ namespace MinecartMadness {
 
   class Cart {
   public:
-    Cart(int loc_x, int loc_y, utils::Point initial_dir, const std::vector<std::string>& b) : location { loc_x, loc_y }, direction (initial_dir), board(b), next_crossroad_dir(0) {}
+    Cart(int loc_x, int loc_y, utils::Point initial_dir);
 
+    void advance(char road_type);
     void advance();
 
     void handle_forward_slash();
     void handle_back_slash();
     void handle_crossroads();
+    void mark_for_deletion();
     void turn_left();
     void turn_right();
+    utils::Point next_location();
 
     int next_crossroad_dir;
-    const std::vector<std::string>& board;
-    const std::vector<utils::Point> crashes;
     utils::Point location;
     utils::Point direction;
+    bool crashed;
   };
 
   class MinecartSimulation {
   public:
 
     MinecartSimulation(std::vector<std::string> gameboard);
-    void simulate();
-    void find_carts();
-    std::pair<int, int> find_first_crash();
 
-    // find crash
-    // check for crash
+    void find_carts();
+    bool crash_at(utils::Point loc);
+    void mark_carts_at_loc_for_deletion(utils::Point loc);
+    void remove_marked_carts();
+    void log_crash(utils::Point loc);
+    void sort_carts();
+
+
+    void simulate();
+    utils::Point find_first_crash();
+    utils::Point find_last_cart();
+
 
     std::vector<Cart> carts;
-    std::vector<std::string> board;
+    std::vector<utils::Point> crashes;
+    const std::vector<std::string> board;
   };
 }
 

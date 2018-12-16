@@ -11,17 +11,40 @@ TEST(MinecartMadnessTest, getsCartsCorrectly){
   MinecartMadness::MinecartSimulation test(testBoard);
 
   EXPECT_EQ(test.carts.size(), 2);
+  EXPECT_EQ(test.carts[0].location.x, 3);
+  EXPECT_EQ(test.carts[0].location.y, 0);
+  EXPECT_EQ(test.carts[1].location.x, 2);
+  EXPECT_EQ(test.carts[1].location.y, 2);
 }
 
+// TEST(MinecartMadnessTest, lessSimpleLoad){
+//   std::vector<std::string> board =
+//     { "/>-<\\  ", //  "/>-<\  "
+//       "|   |  ",  //  "|   |  "
+//       "| /<+-\\", //  "| /<+-\"
+//       "| | | v",  //  "| | | v"
+//       "\\>+</ |", //  "\>+</ |"
+//       "  |   ^",  //  "  |   ^"
+//       "  \\<->/" };// "  \<->/"
+
+//   MinecartMadness::MinecartSimulation sim(board);
+
+//   for(const auto cart : sim.carts ){
+//     std::cout << "cart at: " << cart.location.x << "." << cart.location.y << "." << std::endl;
+//     std::cout << "--  dir: " << cart.direction.x << "." << cart.direction.y << std::endl;
+//   }
+//   sim.simulate();
+//   for(const auto cart : sim.carts ){
+//     std::cout << "cart at: " << cart.location.x << "." << cart.location.y << "." << std::endl;
+//     std::cout << "--  dir: " << cart.direction.x << "." << cart.direction.y << std::endl;
+//   }
+
+// }
+
 TEST(MinecartMadnessTest, advanceHandlesVerticalRoadsMovingUpward){
-  std::vector<std::string> testBoard
-  { "|",
-    "|",
-    "^" };
+  MinecartMadness::Cart cart(0, 2, MinecartMadness::UP);
 
-  MinecartMadness::Cart cart(0, 2, MinecartMadness::UP, testBoard);
-
-  cart.advance();
+  cart.advance('|');
 
   auto expected_loc = utils::Point{0, 1};
 
@@ -29,14 +52,9 @@ TEST(MinecartMadnessTest, advanceHandlesVerticalRoadsMovingUpward){
 }
 
 TEST(MinecartMadnessTest, advanceHandlesVerticalRoadsMovingDownward){
-  std::vector<std::string> testBoard
-  { "|",
-      "|",
-      "^" };
+  MinecartMadness::Cart cart(0, 1, MinecartMadness::DOWN);
 
-  MinecartMadness::Cart cart(0, 1, MinecartMadness::DOWN, testBoard);
-
-  cart.advance();
+  cart.advance('|');
 
   auto expected_loc = utils::Point{0, 2};
 
@@ -44,12 +62,9 @@ TEST(MinecartMadnessTest, advanceHandlesVerticalRoadsMovingDownward){
 }
 
 TEST(MinecartMadnessTest, advanceHandlesHorizontalRoadsMovingRight){
-  std::vector<std::string> testBoard
-  { "---" };
+  MinecartMadness::Cart cart(1, 0, MinecartMadness::RIGHT);
 
-  MinecartMadness::Cart cart(1, 0, MinecartMadness::RIGHT, testBoard);
-
-  cart.advance();
+  cart.advance('-');
 
   auto expected_loc = utils::Point{2, 0};
 
@@ -57,12 +72,9 @@ TEST(MinecartMadnessTest, advanceHandlesHorizontalRoadsMovingRight){
 }
 
 TEST(MinecartMadnessTest, advanceHandlesHorizontalRoadsMovingLeft){
-  std::vector<std::string> testBoard
-  { "---" };
+  MinecartMadness::Cart cart(1, 0, MinecartMadness::LEFT);
 
-  MinecartMadness::Cart cart(1, 0, MinecartMadness::LEFT, testBoard);
-
-  cart.advance();
+  cart.advance('-');
 
   auto expected_loc = utils::Point{0, 0};
 
@@ -70,13 +82,9 @@ TEST(MinecartMadnessTest, advanceHandlesHorizontalRoadsMovingLeft){
 }
 
 TEST(MinecartMadnessTest, whenEnteringForwardSlashMovingUpDirectionBecomesRight){
-  std::vector<std::string> testBoard
-  { "/",
-    "|" };
+  MinecartMadness::Cart cart(0, 1, MinecartMadness::UP);
 
-  MinecartMadness::Cart cart(0, 1, MinecartMadness::UP, testBoard);
-
-  cart.advance();
+  cart.advance('/');
 
   auto expected_loc = utils::Point{0, 0};
 
@@ -85,13 +93,9 @@ TEST(MinecartMadnessTest, whenEnteringForwardSlashMovingUpDirectionBecomesRight)
 }
 
 TEST(MinecartMadnessTest, whenEnteringForwardSlashMovingDownDirectionBecomesLeft){
-  std::vector<std::string> testBoard
-  { "|",
-    "/" };
+  MinecartMadness::Cart cart(0, 0, MinecartMadness::DOWN);
 
-  MinecartMadness::Cart cart(0, 0, MinecartMadness::DOWN, testBoard);
-
-  cart.advance();
+  cart.advance('/');
 
   auto expected_loc = utils::Point{0, 1};
 
@@ -100,11 +104,9 @@ TEST(MinecartMadnessTest, whenEnteringForwardSlashMovingDownDirectionBecomesLeft
 }
 
 TEST(MinecartMadnessTest, whenEnteringForwardSlashMovingLeftDirectionBecomesDown){
-  std::vector<std::string> testBoard { "/-" };
+  MinecartMadness::Cart cart(1, 0, MinecartMadness::LEFT);
 
-  MinecartMadness::Cart cart(1, 0, MinecartMadness::LEFT, testBoard);
-
-  cart.advance();
+  cart.advance('/');
 
   auto expected_loc = utils::Point{0, 0};
 
@@ -113,11 +115,9 @@ TEST(MinecartMadnessTest, whenEnteringForwardSlashMovingLeftDirectionBecomesDown
 }
 
 TEST(MinecartMadnessTest, whenEnteringForwardSlashMovingRightDirectionBecomesUp){
-  std::vector<std::string> testBoard { "-/" };
+  MinecartMadness::Cart cart(0, 0, MinecartMadness::RIGHT);
 
-  MinecartMadness::Cart cart(0, 0, MinecartMadness::RIGHT, testBoard);
-
-  cart.advance();
+  cart.advance('/');
 
   auto expected_loc = utils::Point{1, 0};
 
@@ -126,13 +126,9 @@ TEST(MinecartMadnessTest, whenEnteringForwardSlashMovingRightDirectionBecomesUp)
 }
 
 TEST(MinecartMadnessTest, whenEnteringBackSlashMovingUpDirectionBecomesLeft){
-  std::vector<std::string> testBoard
-  { "\\",
-    "|" };
+  MinecartMadness::Cart cart(0, 1, MinecartMadness::UP);
 
-  MinecartMadness::Cart cart(0, 1, MinecartMadness::UP, testBoard);
-
-  cart.advance();
+  cart.advance('\\');
 
   auto expected_loc = utils::Point{0, 0};
 
@@ -141,13 +137,9 @@ TEST(MinecartMadnessTest, whenEnteringBackSlashMovingUpDirectionBecomesLeft){
 }
 
 TEST(MinecartMadnessTest, whenEnteringBackSlashMovingDownDirectionBecomesRight){
-  std::vector<std::string> testBoard
-  { "|",
-    "\\" };
+  MinecartMadness::Cart cart(0, 0, MinecartMadness::DOWN);
 
-  MinecartMadness::Cart cart(0, 0, MinecartMadness::DOWN, testBoard);
-
-  cart.advance();
+  cart.advance('\\');
 
   auto expected_loc = utils::Point{0, 1};
 
@@ -156,11 +148,9 @@ TEST(MinecartMadnessTest, whenEnteringBackSlashMovingDownDirectionBecomesRight){
 }
 
 TEST(MinecartMadnessTest, whenEnteringBackSlashMovingLeftDirectionBecomesUp){
-  std::vector<std::string> testBoard { "\\-" };
+  MinecartMadness::Cart cart(1, 0, MinecartMadness::LEFT);
 
-  MinecartMadness::Cart cart(1, 0, MinecartMadness::LEFT, testBoard);
-
-  cart.advance();
+  cart.advance('\\');
 
   auto expected_loc = utils::Point{0, 0};
 
@@ -169,11 +159,9 @@ TEST(MinecartMadnessTest, whenEnteringBackSlashMovingLeftDirectionBecomesUp){
 }
 
 TEST(MinecartMadnessTest, whenEnteringBackSlashMovingRightDirectionBecomesDown){
-  std::vector<std::string> testBoard { "-\\" };
+  MinecartMadness::Cart cart(0, 0, MinecartMadness::RIGHT);
 
-  MinecartMadness::Cart cart(0, 0, MinecartMadness::RIGHT, testBoard);
-
-  cart.advance();
+  cart.advance('\\');
 
   auto expected_loc = utils::Point{1, 0};
 
@@ -182,35 +170,30 @@ TEST(MinecartMadnessTest, whenEnteringBackSlashMovingRightDirectionBecomesDown){
 }
 
 TEST(MinecartMadnessTest, crossroadsTest){
-  std::vector<std::string> testBoard
-  { "+++" ,
-    "++-",
-    "-+-" };
+  MinecartMadness::Cart cart(0, 2, MinecartMadness::RIGHT);
 
-  MinecartMadness::Cart cart(0, 2, MinecartMadness::RIGHT, testBoard);
-
-  cart.advance();
+  cart.advance('+');
 
   auto expected_loc = utils::Point{1, 2};
 
   EXPECT_EQ(cart.location, expected_loc);
   EXPECT_EQ(cart.direction, MinecartMadness::UP);
 
-  cart.advance();
+  cart.advance('+');
 
   expected_loc = utils::Point{1, 1};
 
   EXPECT_EQ(cart.location, expected_loc);
   EXPECT_EQ(cart.direction, MinecartMadness::UP);
 
-  cart.advance();
+  cart.advance('+');
 
   expected_loc = utils::Point{1, 0};
 
   EXPECT_EQ(cart.location, expected_loc);
   EXPECT_EQ(cart.direction, MinecartMadness::RIGHT);
 
-  cart.advance();
+  cart.advance('+');
 
   expected_loc = utils::Point{2, 0};
 
@@ -218,19 +201,13 @@ TEST(MinecartMadnessTest, crossroadsTest){
   EXPECT_EQ(cart.direction, MinecartMadness::UP);
 }
 
-TEST(MinecartMadnessTest, canDetectDuplicatePair){
-  std::vector<std::string> testBoard
-  { "+++" ,
-      "++-",
-      "-+-" };
-
-  MinecartMadness::MinecartSimulation sim(testBoard);
-
-  sim.carts = std::vector<MinecartMadness::Cart> { MinecartMadness::Cart(0, 2, MinecartMadness::RIGHT, testBoard),
-                 MinecartMadness::Cart(0, 2, MinecartMadness::RIGHT, testBoard)};
-
-  EXPECT_EQ(sim.find_first_crash().first, 0);
-  EXPECT_EQ(sim.find_first_crash().second, 2);
+TEST(MinecartMadnessTest, canDetectCrash){
+  std::vector<std::string> board = { ">-" };
+  MinecartMadness::MinecartSimulation sim(board);
+  utils::Point crash { 0, 0 } ;
+  EXPECT_TRUE(sim.crash_at(crash));
+  utils::Point not_crash { 0, 1 } ;
+  EXPECT_FALSE(sim.crash_at(not_crash));
 }
 
 TEST(MinecartMadnessTest, simulateUpdatesCartLocations){
@@ -249,14 +226,64 @@ TEST(MinecartMadnessTest, simpleCrash){
 
   MinecartMadness::MinecartSimulation sim(board);
 
-  EXPECT_EQ(sim.find_first_crash().first, 3);
+  EXPECT_EQ(sim.carts.size(), 2);
+  EXPECT_EQ(sim.find_first_crash().x, 3);
+  EXPECT_EQ(sim.carts.size(), 0);
 }
 
-TEST(MinecartMadnessTest, solveDay1){
-  std::vector<std::string> board = utils::slurp_file_lines("day-13/input.txt");
+TEST(MinecartMadnessTest, lessSimpleCrash){
+  std::vector<std::string> board =
+    { "/>-<\\  ", //  "/>-<\  "
+      "|   |  ",  //  "|   |  "
+      "| /<+-\\", //  "| /<+-\"
+      "| | | v",  //  "| | | v"
+      "\\>+</ |", //  "\>+</ |"
+      "  |   ^",  //  "  |   ^"
+      "  \\<->/" };// "  \<->/"
 
   MinecartMadness::MinecartSimulation sim(board);
 
-  EXPECT_EQ(sim.find_first_crash().first, 0);
-  EXPECT_EQ(sim.find_first_crash().second, 2);
+  EXPECT_EQ(sim.carts.size(), 9);
+  EXPECT_EQ(sim.find_last_cart().x, 6);
+  EXPECT_EQ(sim.find_last_cart().y, 4);
+  EXPECT_EQ(sim.carts.size(), 1);
+}
+
+TEST(MinecartMadnessTest, anotherCrash){
+  std::vector<std::string> board =
+    { 
+"/->--->>--\\   /-----<->----\\",
+"|         |   |            |",
+"\\---------/   \\------------/"
+
+      };
+
+  MinecartMadness::MinecartSimulation sim(board);
+
+  EXPECT_EQ(sim.carts.size(), 5);
+  EXPECT_EQ(sim.find_last_cart().x, 6);
+  EXPECT_EQ(sim.find_last_cart().y, 2);
+  EXPECT_EQ(sim.carts.size(), 1);
+}
+
+TEST(MinecartMadnessTest, solvePart1){
+  std::vector<std::string> board = utils::slurp_file_lines("day-13/input.txt");
+
+  MinecartMadness::MinecartSimulation sim(board);
+  EXPECT_EQ(sim.carts.size(), 17);
+
+  auto result = sim.find_first_crash();
+  EXPECT_EQ(result.x, 115);
+  EXPECT_EQ(result.y, 138);
+  EXPECT_EQ(sim.carts.size(), 15);
+}
+
+TEST(MinecartMadnessTest, solvePart2){
+  std::vector<std::string> board = utils::slurp_file_lines("day-13/input.txt");
+
+  MinecartMadness::MinecartSimulation sim(board);
+  auto result = sim.find_last_cart();
+  EXPECT_EQ(sim.carts.size(), 1);
+  EXPECT_EQ(result.x, 0);
+  EXPECT_EQ(result.y, 98);
 }

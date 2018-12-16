@@ -1,0 +1,9 @@
+this one took me _forever_.
+
+At first, I was passing a reference to the board into each Cart, that was a weird decision that I was forced to refactor later when I decided that the Simulation class should be handling collision checking.
+
+I wasted a _bunch_ of time debugging and constructing test cases for basic movement even though I had tested movement pretty extensively. This stuff did not have to be changed once the tests passed the first time so all that time making sure they worked was somewhat wasted.
+
+The two big hurdles were subtle ones. The first was in the simulate function. At afirst, when I found a crash, I would run a remove_carts_with_loc(Point loc) function. This invalidated my iterator in the range based for and caused issues.
+
+The last issue was to simply sort the carts before each step of the simulation. This is so obvious now that I've figured it out - because the order that the carts should update is based on their position. But this caused subtle bugs that propagated to giving some wildly wrong results. I had to see this in someone else's code before it occured to me, but oh well. This is still a pretty good solution.
