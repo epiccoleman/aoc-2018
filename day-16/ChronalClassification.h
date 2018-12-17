@@ -30,11 +30,16 @@ namespace ChronalClassification {
   };
 
   class OpcodeClassifier {
+  public:
+    OpcodeClassifier(vector<Opcode> ops, vector<int> input)
+      : opcodes(ops) { parse_input(input);}
+
     vector<Instruction> instructions;
     vector<Opcode> opcodes;
 
-    void parse_input(vector<string> input);
+    void parse_input(vector<int> input);
     int count_possible_opcodes(Instruction instruction);
+    int count_samples_with_three_possible_opcodes(); // too on the nose? 
   };
 
 

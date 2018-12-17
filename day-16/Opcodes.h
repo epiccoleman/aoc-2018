@@ -190,23 +190,23 @@ namespace ChronalClassification {
                                reg[C] = (reg[A] == reg[B]) ? 1 : 0;
                                return reg;
                              });
-  }
 
-  static const vector<Opcode> opcodes {
-      Opcodes::ADDR,
-      Opcodes::ADDI,
-      Opcodes::MULR,
-      Opcodes::MULI,
-      Opcodes::BANR,
-      Opcodes::BANI,
-      Opcodes::BORR,
-      Opcodes::BORI,
-      Opcodes::SETR,
-      Opcodes::SETI,
-      Opcodes::GTIR,
-      Opcodes::GTRI,
-      Opcodes::GTRR,
-      Opcodes::EQIR,
-      Opcodes::EQRI,
-      Opcodes::EQRR };
+  static const vector<Opcode> OPCODES {
+      ADDR,
+      ADDI,
+      MULR,
+      MULI,
+      BANR,
+      BANI,
+      BORR,
+      BORI,
+      SETR,
+      SETI,
+      GTIR,
+      GTRI,
+      GTRR,
+      EQIR,
+      EQRI,
+      EQRR };
+  }
 }
