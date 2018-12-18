@@ -71,7 +71,12 @@ TEST(ChronalClassificationTest, solvePart2){
 
   test.deduce_opcode_ids();
 
-  int result = 0;
-  utils::present_result("Part 1: ", result);
-  EXPECT_EQ(result, 509);
+  utils::present_result("Part 2: Opcode IDs", "");
+
+  vector<int> test_program = utils::slurp_file_as_ints("day-16/input-part-2.txt");
+
+  vector<int> result = test.execute_program(test_program);
+
+  utils::present_result("Part 2: register at [0] = ", result[0]);
+  EXPECT_EQ(result[0], 496);
 }

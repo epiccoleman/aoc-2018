@@ -54,9 +54,9 @@ namespace ChronalClassification {
     map<int, int> deduce_ids(map<int, unordered_set<int> > possible_ops_map);
     void deduce_opcode_ids();
 
+    vector<vector<int> > parse_program(std::vector<int> program);
+    vector<int> execute_program(std::vector<int> program);
   };
-
-
 }
 
 #endif

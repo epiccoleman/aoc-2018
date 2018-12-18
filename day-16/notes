@@ -1,0 +1,9 @@
+learned a lot of cool stuff on this one. pretty fun functional programming problem.
+
+the deduction on the opcodes was incredibly satisfying. Much like Day 10, that part involved me playing with the code and futzing around with the data until I saw the light. Once I got two instructions I could see that there was a chain and watching the dominoes fall was pretty satisfying.
+
+Vectors were probably the wrong choice here. Using raw arrays would have let me use destructuring, which would have made the code for the operations a little nicer. They gave me some issues when I was first trying to set up lambdas, so I just used vectors.
+
+Lastly, I figured out that all the business of passing around references to indices in the opcodes array was dumb too late. Probably the right thing to do here would have been to pass around const references to the operations in opcodes. By the time I realized this, I was almost done, and so I didn't refactor. Oh well.
+
+One other thing - I decided to use using directives in this one, with all the stuff I used from std. I think I prefer just using the fully qualified namespace - EXCEPT in tests. 

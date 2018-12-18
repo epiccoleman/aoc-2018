@@ -127,7 +127,27 @@ void ChronalClassification::OpcodeClassifier::deduce_opcode_ids(){
   }
 }
 
-// execute sample program
-// vec int register
-// for line in program 
-// opcode_map[line[0]].operation(reg, line)
+vector<vector<int> > ChronalClassification::OpcodeClassifier::parse_program(std::vector<int> program) {
+  vector<vector<int > > program_lines;
+  for(int i = 0; i < program.size(); i += 4){
+    program_lines.push_back( //don't be a hero
+                           vector<int>
+                             { program[i], program[i+1], program[i+2], program[i+3]}
+                           );
+  }
+  return program_lines;
+}
+
+vector<int> ChronalClassification::OpcodeClassifier::execute_program(std::vector<int> program) {
+  vector<vector<int> > parsed_program = parse_program(program); //lol
+
+  vector<int> reg { 0, 0, 0, 0 };
+  
+  for(auto instruction : parsed_program){
+    int operation = instruction[0];
+    const Opcode &opcode = opcodes[opcode_map[operation]];
+    reg = opcode.operation(reg, instruction);
+  }
+
+  return reg;
+}
