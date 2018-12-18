@@ -7,8 +7,6 @@ using std::count_if;
 using std::find_if;
 using std::copy_if;
 using std::back_inserter;
-#include <numeric>
-using std::iota;
 
 ChronalClassification::Opcode::Opcode(string n, Operation op)
   : name(n),
@@ -86,16 +84,16 @@ map<int,int> ChronalClassification::OpcodeClassifier::deduce_ids(map<int,unorder
   };
 
   while(opcodes_with_more_than_one_possibility_exist(possible_ops_map)){
-    for (auto kv : possible_ops_map){
-      if (kv.second.size() == 1){
-        int opcode_index = *kv.second.begin(); //gross but fuck it
-        known_opcodes[kv.first] = opcode_index;
+    for (auto possibility : possible_ops_map){
+      if (possibility.second.size() == 1){
+        int opcode_index = *possibility.second.begin(); //gross but fuck it
+        known_opcodes[possibility.first] = opcode_index;
       }
     }
 
-    for (auto kv : known_opcodes){
-      for (auto &thing : possible_ops_map){
-        thing.second.erase(kv.second);
+    for (auto known : known_opcodes){
+      for (auto &possibility : possible_ops_map){
+        possibility.second.erase(known.second);
       }
     }
   }
