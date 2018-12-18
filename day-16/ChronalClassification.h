@@ -39,7 +39,6 @@ namespace ChronalClassification {
       : opcodes(ops)
     {
       parse_input(input);
-      deduce_opcode_ids();
     }
 
     vector<Instruction> instructions;
@@ -48,12 +47,12 @@ namespace ChronalClassification {
 
     void parse_input(vector<int> input);
     int count_possible_opcodes(Instruction instruction);
-    int count_samples_with_three_possible_opcodes(); // too on the nose? 
+    int count_samples_with_three_possible_opcodes();
 
-    void deduce_opcode_ids();
     map<int, unordered_set<int> > find_possible_opcode_ids();
     map<int, unordered_set<int> > remove_invalid_ops(map<int, unordered_set<int> > possible_ops_map);
     map<int, int> deduce_ids(map<int, unordered_set<int> > possible_ops_map);
+    void deduce_opcode_ids();
 
   };
 
