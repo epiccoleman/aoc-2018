@@ -53,10 +53,6 @@ using std::transform;
 //   EXPECT_EQ(test.instructions[0].after, expected_after);
 // }
 
-TEST(ChronalClassificationTest, instructionsKnowTheirOpcode){
- Opcode testInput { 3, 2, 1, 1, 9, 2, 1, 2, 3, 2, 2, 1 };
-}
-
 // TEST(ChronalClassificationTest, solvePart1){
 //   vector<int> testInput = utils::slurp_file_as_ints("day-16/input-part-1.txt");
 
