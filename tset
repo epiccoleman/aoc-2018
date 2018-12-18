@@ -1,0 +1,25 @@
+Note: Google Test filter = StarAlignmentTest.*
+[==========] Running 4 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 4 tests from StarAlignmentTest
+[ RUN      ] StarAlignmentTest.advance_position
+[       OK ] StarAlignmentTest.advance_position (0 ms)
+[ RUN      ] StarAlignmentTest.advance_stars
+[       OK ] StarAlignmentTest.advance_stars (0 ms)
+[ RUN      ] StarAlignmentTest.slurp_input
+[       OK ] StarAlignmentTest.slurp_input (3 ms)
+[ RUN      ] StarAlignmentTest.hits
+hit at with range (130,149) (221,188)hit at with range (135,154) (216,183)hit at with range (140,159) (211,178)hit at with range (145,164) (206,173)hit at with range (140,159) (207,178)hit at with range (135,154) (211,183)hit at with range (130,149) (216,188)hit at with range (125,144) (221,193)/code/day-10/StarAlignmentTest.cpp:55: Failure
+      Expected: count
+      Which is: 8
+To be equal to: 20
+[  FAILED  ] StarAlignmentTest.hits (2113 ms)
+[----------] 4 tests from StarAlignmentTest (2118 ms total)
+
+[----------] Global test environment tear-down
+[==========] 4 tests from 1 test case ran. (2120 ms total)
+[  PASSED  ] 3 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] StarAlignmentTest.hits
+
+ 1 FAILED TEST

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+while read -r LINE; do
+ echo $LINE | awk '{printf "%s %s\n", $2, $8; }' >> input.txt
+done < original-input.txt

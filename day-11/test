@@ -1,0 +1,4 @@
+#!/bin/bash
+
+TEST_NAME="ChronalChargeTest"
+./AdventOfCodeTest --gtest_filter="${TEST_NAME}.*"
