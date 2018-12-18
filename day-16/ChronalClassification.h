@@ -35,12 +35,7 @@ namespace ChronalClassification {
 
   class OpcodeClassifier {
   public:
-    OpcodeClassifier(vector<Opcode> ops, vector<int> input)
-      : opcodes(ops)
-    {
-      parse_input(input);
-    }
-
+    OpcodeClassifier(vector<Opcode> ops, vector<int> input);
     vector<Instruction> instructions;
     vector<Opcode> opcodes;
     map<int, int> opcode_map;

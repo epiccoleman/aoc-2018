@@ -4,6 +4,9 @@ the deduction on the opcodes was incredibly satisfying. Much like Day 10, that p
 
 Vectors were probably the wrong choice here. Using raw arrays would have let me use destructuring, which would have made the code for the operations a little nicer. They gave me some issues when I was first trying to set up lambdas, so I just used vectors.
 
-Lastly, I figured out that all the business of passing around references to indices in the opcodes array was dumb too late. Probably the right thing to do here would have been to pass around const references to the operations in opcodes. By the time I realized this, I was almost done, and so I didn't refactor. Oh well.
+I figured out that all the business of passing around references to indices in the opcodes array was dumb too late. Probably the right thing to do here would have been to pass around const references to the operations in opcodes. By the time I realized this, I was almost done, and so I didn't refactor. Oh well.
+Remembered why I originally did this - because I can't figure out how to make a set of Opcodes. And anyway, it actually works out pretty ok.
+
+Managed to delete quite a bit of code in the function for determining possible operations for each opcode number. Prepopulating the sets with all possible instructions let me skip a bunch of useless processing and just start eliminating possibilites. This is probably a good strategy to remember.
 
 One other thing - I decided to use using directives in this one, with all the stuff I used from std. I think I prefer just using the fully qualified namespace - EXCEPT in tests. 

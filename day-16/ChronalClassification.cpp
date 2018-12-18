@@ -7,6 +7,8 @@ using std::count_if;
 using std::find_if;
 using std::copy_if;
 using std::back_inserter;
+#include <numeric>
+using std::iota;
 
 ChronalClassification::Opcode::Opcode(string n, Operation op)
   : name(n),
@@ -17,9 +19,11 @@ bool ChronalClassification::Opcode::validate(Instruction instruction) const {
   return instruction.after == operation(instruction.before, instruction.instruction);
 }
 
-// bool ChronalClassification::Opcode::operator==(const Opcode& other) {
-//   return name == other.name;
-// }
+ChronalClassification::OpcodeClassifier::OpcodeClassifier(vector<Opcode> ops, vector<int> input)
+  : opcodes(ops)
+{
+  parse_input(input);
+}
 
 void ChronalClassification::OpcodeClassifier::parse_input(vector<int> input) {
   for(int i = 0; i < input.size(); i += 12){
@@ -49,41 +53,23 @@ int ChronalClassification::OpcodeClassifier::count_samples_with_three_possible_o
 }
 
 map<int,unordered_set<int> > ChronalClassification::OpcodeClassifier::find_possible_opcode_ids() {
-  // check each instruction for validity against each operation in opcodes.
-  // store the index of the operation if the instruction validates.
+
+  unordered_set<int> all_ins;
+  for(int i = 0; i < opcodes.size(); i++) all_ins.insert(i);
+
   map<int, unordered_set<int> > possible_ops;
-    for(const auto &instruction : instructions){
-    for(int opcode_index = 0; opcode_index < opcodes.size(); opcode_index++){
-      if(opcodes[opcode_index].validate(instruction)){
-        possible_ops[instruction.opcode()].insert(opcode_index);
+  for(int i = 0; i < opcodes.size(); i++) possible_ops[i] = all_ins;
+
+  for(const auto &instruction : instructions){
+    unordered_set<int> valid_codes;
+
+    for (int i = 0; i < opcodes.size(); i++){
+      if(!opcodes[i].validate(instruction)){
+        possible_ops[instruction.opcode()].erase(i);
       }
     }
   }
   return possible_ops;
-}
-
-map<int,unordered_set<int> > ChronalClassification::OpcodeClassifier::remove_invalid_ops(map<int,unordered_set<int> > possible_ops_map) {
-  // for each opcode index
-  for(int i = 0; i < opcodes.size(); i++){
-    unordered_set possible_ops = possible_ops_map[i];
-
-    // get just the instructions with opcode i 
-    vector<Instruction> instructions_with_code_n;
-    std::copy_if(instructions.begin(), instructions.end(), back_inserter(instructions_with_code_n),
-                 [i](Instruction instruction){
-                   return instruction.opcode() == i;
-                 });
-
-    // if a given instruction fails the validation for a given possible operation, remove that operation from the possibilities for this opcode
-    for(auto instruction : instructions_with_code_n){
-      for(auto op : possible_ops){
-        if(!opcodes[op].validate(instruction)){
-          possible_ops_map[i].erase(op);
-        }
-      }
-    }
-  }
-  return possible_ops_map;
 }
 
 map<int,int> ChronalClassification::OpcodeClassifier::deduce_ids(map<int,unordered_set<int> > possible_ops_map) {
@@ -117,10 +103,7 @@ map<int,int> ChronalClassification::OpcodeClassifier::deduce_ids(map<int,unorder
 }
 
 void ChronalClassification::OpcodeClassifier::deduce_opcode_ids(){
-  map<int, unordered_set<int> > opcode_possibilities;
-  opcode_possibilities = find_possible_opcode_ids();
-  opcode_possibilities = remove_invalid_ops(opcode_possibilities);
-  opcode_map = deduce_ids(opcode_possibilities);
+  opcode_map = deduce_ids(find_possible_opcode_ids());
   std::cerr << "Known Codes:" <<std::endl;
   for (auto kv : opcode_map){
     std::cerr << kv.first << ": " << opcodes[kv.second].name << std::endl;
