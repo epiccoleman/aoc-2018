@@ -12,6 +12,8 @@ namespace utils {
 
   void present_result(std::string text, int result);
   void present_result(std::string text, std::string result);
+
+  int sum_factors(int n);
 }
 
 #endif

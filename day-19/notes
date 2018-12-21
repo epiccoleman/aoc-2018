@@ -1,0 +1,170 @@
+* Assembly stuff
+#+BEGIN_SRC 
+addi 3 16 3
+seti 1 3 4
+  seti 1 8 5 //start of outer loop
+    mulr 4 5 1  r[1] = r[4] * r[5]
+    eqrr 1 2 1  r[1] = r[1] == r[2]
+    addr 1 3 3  r[3] = r[1] + r[3] // no change when r1 != r2
+    addi 3 1 3  r[3] += r[1] // this skips the next line when 
+      addr 4 0 0  // runs if r4 * r5 == r2  (conditional, but not a jump)
+    addi 5 1 5  r[5] += 1 
+    gtrr 5 2 1  r[1] = r[5] > r[2] (which it wont for a long time) (think this is inner)
+    addr 3 1 3  r[3] += r[1] // no rr
+    seti 2 6 3  back to top of loop 
+      addi 4 1 4 // runs if r5 > r2 (break inner loop)
+  gtrr 4 2 1 // r[1] = r[4] > r[2]  // check if r[4] is bigger than r[2]
+  addr 1 3 3  
+  seti 1 1 3 // this might be the outer loop?  // jumps to seti 1 8 5 (to previous + 1)
+mulr 3 3 3  // this is where you'll come out. if you get here I think you're done because 16 * 16 will inc the IP out of range. 
+addi 2 2 2
+mulr 2 2 2
+mulr 3 2 2
+muli 2 11 2
+addi 1 5 1
+mulr 1 3 1
+addi 1 8 1
+addr 2 1 2
+addr 3 0 3
+seti 0 5 3
+setr 3 9 1
+mulr 1 3 1
+addr 3 1 1
+mulr 3 1 1
+muli 1 14 1
+mulr 1 3 1
+addr 2 1 2
+seti 0 9 0
+seti 0 9 3
+#+END_SRC
+
+here's the loop:
+#+BEGIN_SRC c 
+  r2 = 10551344
+    while ( r4 < r2 ) {
+      while ( r5 < r2 ){
+        if ( r5 * r4 == r2 ) {
+          r0 += r4;
+        }
+        r5++;
+      }
+      r4++;
+      r5 = 1;
+    }
+ #+END_SRC
+ 
+so how many times does r0 += r4 happen?
+
+if r2 is divisible by r4 then it will happen once 
+r2 will be 10551344 on last iteration of inner loop
+
+
+factors of 10551344:
+1, 2, 4, 8, 16, 433, 866, 1523, 1732, 3046, 
+3464, 6092, 6928, 12184, 24368, 659459, 1318918, 2637836, 5275672, 10551344,
+
+so it will happen when 
+
+|     r[4] |     r[5] | r[4] * r[5] |
+|----------+----------+-------------|
+|        1 | 10551344 |    10551344 |
+|        2 |  5275672 |    10551344 |
+|        4 |  2637836 |    10551344 |
+|        8 |  1318918 |    10551344 |
+|       16 |   659459 |    10551344 |
+|      433 |    24368 |    10551344 |
+|      866 |    12184 |    10551344 |
+|     1523 |     6928 |    10551344 |
+|     1732 |     6092 |    10551344 |
+|     3046 |     3464 |    10551344 |
+|     3464 |     3046 |    10551344 |
+|     6092 |     1732 |    10551344 |
+|     6928 |     1523 |    10551344 |
+|    12184 |      866 |    10551344 |
+|    24368 |      433 |    10551344 |
+|   659459 |       16 |    10551344 |
+|  1318918 |        8 |    10551344 |
+|  2637836 |        4 |    10551344 |
+|  5275672 |        2 |    10551344 |
+| 10551344 |        1 |    10551344 |
+#+TBLFM: $3 = $2 * $1
+
+#+BEGIN_SRC elisp
+  (+
+    1 2 4 8 16 433 866 1523 1732 3046 
+    3464 6092 6928 12184 24368 659459 1318918 2637836 5275672 10551344
+  ) 
+
+
+(+ 1 2 3 4 5 6 10 12 15 20 30 60) 
+
+#+END_SRC
+
+
+
+
+
+
+output
+
+addi 3 16 3
+{    1,          0,          0,   16,    0,    0 }
+addi 2 2 2
+{    1,          0,          2,   17,    0,    0 }
+mulr 2 2 2
+{    1,          0,          4,   18,    0,    0 }
+mulr 3 2 2
+{    1,          0,         76,   19,    0,    0 }
+muli 2 11 2
+{    1,          0,        836,   20,    0,    0 }
+addi 1 5 1
+{    1,          5,        836,   21,    0,    0 }
+mulr 1 3 1
+{    1,        110,        836,   22,    0,    0 }
+addi 1 8 1
+{    1,        118,        836,   23,    0,    0 }
+addr 2 1 2
+{    1,        118,        954,   24,    0,    0 }
+addr 3 0 3
+{    1,        118,        954,   26,    0,    0 }
+setr 3 9 1
+{    1,         27,        954,   27,    0,    0 }
+mulr 1 3 1
+{    1,        756,        954,   28,    0,    0 }
+addr 3 1 1
+{    1,        785,        954,   29,    0,    0 }
+mulr 3 1 1
+{    1,      23550,        954,   30,    0,    0 }
+muli 1 14 1
+{    1,     329700,        954,   31,    0,    0 }
+mulr 1 3 1
+{    1,   10550400,        954,   32,    0,    0 }
+addr 2 1 2
+{    1,   10550400,   10551354,   33,    0,    0 }
+seti 0 9 0
+{    0,   10550400,   10551354,   34,    0,    0 }
+seti 0 9 3
+{    0,   10550400,   10551354,    0,    0,    0 }
+seti 1 3 4
+{    0,   10550400,   10551354,    1,    1,    0 } 
+seti 1 8 5                                        // set  4 , 5 = 1
+{    0,   10550400,   10551354,    2,    1,    1 }  // think iteration countis 10550400 * 10551354
+mulr 4 5 1                                          reg[1] = reg[4] * reg[5] (1)
+{    0,          1,   10551354,    3,    1,    1 }  
+eqrr 1 2 1                                          reg[1] = if reg[1] == reg[2] ( 1 != zillion)
+{    0,          0,   10551354,    4,    1,    1 }  (this is condition for inner lop i think)
+addr 1 3 3                                          reg[3] = reg[1] + reg[3] (4) (ins 6 break?)
+{    0,          0,   10551354,    5,    1,    1 } 
+addi 3 1 3                                          // inc prog counter (then do again, so 7)
+{    0,          0,   10551354,    7,    1,    1 }  
+addi 5 1 5                                          // increment reg[5]
+{    0,          0,   10551354,    8,    1,    2 }  
+gtrr 5 2 1                                          // reg[i] =  if reg[5] > reg[2] (no) 
+{    0,          0,   10551354,    9,    1,    2 }  
+addr 3 1 3                                          // reg[3] = r[1] + r[3] (0) (another lop cond?
+{    0,          0,   10551354,   10,    1,    2 }  
+seti 2 6 3                                          // if we got here, set pc to 2 (start loop agin
+{    0,          0,   10551354,    2,    1,    2 }
+mulr 4 5 1
+{    0,          2,   10551354,    3,    1,    2 }
+eqrr 1 2 1
