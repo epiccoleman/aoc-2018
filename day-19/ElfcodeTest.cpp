@@ -79,7 +79,7 @@ TEST(ElfcodeTest, solvePart2){
   auto program = utils::slurp_file_lines("day-19/input.txt");
 
   test.registers[0] = 1;
-  test.execute_program(program);
+  // test.execute_program(program);
 
   utils::present_result("Day 2:", "");
   std::cerr << "This test takes too long - around 111,331,071,233,316 instruction executions." << std::endl;
