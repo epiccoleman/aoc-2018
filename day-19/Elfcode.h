@@ -22,7 +22,7 @@ namespace Elfcode {
   public:
     ElfcodeInterpreter(std::map<std::string, Operation> code_map, int ip_reg);
 
-    void execute_program(std::vector<std::string> program);
+    virtual void execute_program(std::vector<std::string> program);
     void execute_instruction(const std::string& input);
 
     static const std::string instruction_name(const std::string& input);
