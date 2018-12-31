@@ -17,10 +17,11 @@ ImmuneSystemSimulator::DamageType ImmuneSystemSimulator::damage_type_from_str(st
 
 bool ImmuneSystemSimulator::is_valid_damage_type(string str) {
   return
-    str == "fire" ||
-    str == "slashing" ||
-    str == "radiation" ||
-    str == "bludgeoning" || str == "cold";
+    str == "fire"        ||
+    str == "slashing"    ||
+    str == "radiation"   ||
+    str == "bludgeoning" ||
+    str == "cold";
 }
 
 vector<ImmuneSystemSimulator::DamageType> ImmuneSystemSimulator::find_types_for_stat(string stat, string str) {
